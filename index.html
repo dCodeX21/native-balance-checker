@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Native Balance</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <style>
+    .td-network {
+      font-size: 12px;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 50px;
+      display: block;
+    }
+
+    .td-balance {
+      font-size: 12px;
+      display: block;
+    }
+
+    .td-price-1 {
+      font-size: 12px;
+      text-align: left;
+      padding-left: 20px;
+      display: block;
+      width: 49%;
+      float: left;
+    }
+
+    .td-price-2 {
+      font-size: 12px;
+      text-align: left;
+      padding-left: 0px;
+      display: block;
+      width: 49%;
+      float: right;
+    }
+
+    .pricing-text {
+      font-size: 12px;
+      text-align: right;
+      padding-left: 0px;
+      display: block;
+      width: 50%;
+      float: left;
+    }
+
+    .coingecko-logo {
+      font-size: 12px;
+      text-align: left;
+      padding-left: 10px;
+      display: block;
+      width: 50%;
+      float: right;
+    }
+
+    .proj-title {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <br />
+  <div class="container-fluid text-center">
+    <span class="proj-title">Native Balance Checker</span>
+    <br />
+    <form id="addressForm">
+      <div class="row" style="margin-left: 100px; margin-right: 100px;">
+        <div class="col-8">
+          <input type="text" class="form-control" name="address" id="address" placeholder="Wallet Address">
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary " style="width: 100%;" type="button" id="submitWallet">Submit</button>
+        </div>
+      </div>
+    </form>
+    <br />
+    <div class="row" style="margin-left: 50px; margin-right: 50px;">
+      <table class="table border table-striped table-bordered table-sm">
+        <thead>
+          <tr>
+            <th scope="col" class="col-2">Network</th>
+            <th scope="col" class="col-2">Native Balance</th>
+            <th scope="col" class="col-2">Price</th>
+            <th scope="col" class="col-2">Network</th>
+            <th scope="col" class="col-2">Native Balance</th>
+            <th scope="col" class="col-2">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="td-network">Ethereum</span></td>
+            <td><span id="cell1" class="td-balance"></span></td>
+            <td>
+              <span id="cell1P" class="td-price-1"></span>
+              <span id="cell1P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Goerli</span></td>
+            <td><span id="cell20" class="td-balance"></span></td>
+            <td>
+              <span id="cell20P" class="td-price-1"></span>
+              <span id="cell20P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">BNB</span></td>
+            <td><span id="cell2" class="td-balance"></span></td>
+            <td>
+              <span id="cell2P" class="td-price-1"></span>
+              <span id="cell2P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Sepolia</span></td>
+            <td><span id="cell21" class="td-balance"></span></td>
+            <td>
+              <span id="cell21P" class="td-price-1"></span>
+              <span id="cell21P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Polygon</span></td>
+            <td><span id="cell3" class="td-balance"></span></td>
+            <td>
+              <span id="cell3P" class="td-price-1"></span>
+              <span id="cell3P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Holesky</span></td>
+            <td><span id="cell22" class="td-balance"></span></td>
+            <td>
+              <span id="cell22P" class="td-price-1"></span>
+              <span id="cell22P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Arbitrum Nova</span></td>
+            <td><span id="cell4" class="td-balance"></span></td>
+            <td>
+              <span id="cell4P" class="td-price-1"></span>
+              <span id="cell4P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Arbitrum Goerli</span></td>
+            <td><span id="cell23" class="td-balance"></span></td>
+            <td>
+              <span id="cell23P" class="td-price-1"></span>
+              <span id="cell23P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Arbitrum One</span></td>
+            <td><span id="cell5" class="td-balance"></span></td>
+            <td>
+              <span id="cell5P" class="td-price-1"></span>
+              <span id="cell5P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Scroll Sepolia</span></td>
+            <td><span id="cell24" class="td-balance"></span></td>
+            <td>
+              <span id="cell24P" class="td-price-1"></span>
+              <span id="cell24P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Avalanche</span></td>
+            <td><span id="cell6" class="td-balance"></span></td>
+            <td>
+              <span id="cell6P" class="td-price-1"></span>
+              <span id="cell6P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Avalanche Fuji</span></td>
+            <td><span id="cell25" class="td-balance"></span></td>
+            <td>
+              <span id="cell25P" class="td-price-1"></span>
+              <span id="cell25P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Base</span></td>
+            <td><span id="cell7" class="td-balance"></span></td>
+            <td>
+              <span id="cell7P" class="td-price-1"></span>
+              <span id="cell7P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Base Goerli</span></td>
+            <td><span id="cell26" class="td-balance"></span></td>
+            <td>
+              <span id="cell26P" class="td-price-1"></span>
+              <span id="cell26P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Celo</span></td>
+            <td><span id="cell8" class="td-balance"></span></td>
+            <td>
+              <span id="cell8P" class="td-price-1"></span>
+              <span id="cell8P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">BNB Testnet</span></td>
+            <td><span id="cell27" class="td-balance"></span></td>
+            <td>
+              <span id="cell27P" class="td-price-1"></span>
+              <span id="cell27P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Core</span></td>
+            <td><span id="cell9" class="td-balance"></span></td>
+            <td>
+              <span id="cell9P" class="td-price-1"></span>
+              <span id="cell9P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Combo Testnet</span></td>
+            <td><span id="cell28" class="td-balance"></span></td>
+            <td>
+              <span id="cell28P" class="td-price-1"></span>
+              <span id="cell28P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Linea</span></td>
+            <td><span id="cell11" class="td-balance"></span></td>
+            <td>
+              <span id="cell11P" class="td-price-1"></span>
+              <span id="cell11P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Linea Goerli</span></td>
+            <td><span id="cell30" class="td-balance"></span></td>
+            <td>
+              <span id="cell30P" class="td-price-1"></span>
+              <span id="cell30P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Manta Pacific</span></td>
+            <td><span id="cell12" class="td-balance"></span></td>
+            <td>
+              <span id="cell12P" class="td-price-1"></span>
+              <span id="cell12P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Manta Pacific Testnet</span></td>
+            <td><span id="cell31" class="td-balance"></span></td>
+            <td>
+              <span id="cell31P" class="td-price-1"></span>
+              <span id="cell31P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Mantle</span></td>
+            <td><span id="cell13" class="td-balance"></span></td>
+            <td>
+              <span id="cell13P" class="td-price-1"></span>
+              <span id="cell13P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Mantle Testnet</span></td>
+            <td><span id="cell32" class="td-balance"></span></td>
+            <td>
+              <span id="cell32P" class="td-price-1"></span>
+              <span id="cell32P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">OpBNB</span></td>
+            <td><span id="cell14" class="td-balance"></span></td>
+            <td>
+              <span id="cell14P" class="td-price-1"></span>
+              <span id="cell14P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">OpBNB Testnet</span></td>
+            <td><span id="cell33" class="td-balance"></span></td>
+            <td>
+              <span id="cell33P" class="td-price-1"></span>
+              <span id="cell33P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Optimism</span></td>
+            <td><span id="cell15" class="td-balance"></span></td>
+            <td>
+              <span id="cell15P" class="td-price-1"></span>
+              <span id="cell15P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Optimism Goerli</span></td>
+            <td><span id="cell34" class="td-balance"></span></td>
+            <td>
+              <span id="cell34P" class="td-price-1"></span>
+              <span id="cell34P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Polygon zkEVM</span></td>
+            <td><span id="cell16" class="td-balance"></span></td>
+            <td>
+              <span id="cell16P" class="td-price-1"></span>
+              <span id="cell16P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Polygon zkEVM Testnet</span></td>
+            <td><span id="cell35" class="td-balance"></span></td>
+            <td>
+              <span id="cell35P" class="td-price-1"></span>
+              <span id="cell35P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Public Goods Network</span></td>
+            <td><span id="cell17" class="td-balance"></span></td>
+            <td>
+              <span id="cell17P" class="td-price-1"></span>
+              <span id="cell17P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">PGN Sepolia</span></td>
+            <td><span id="cell36" class="td-balance"></span></td>
+            <td>
+              <span id="cell36P" class="td-price-1"></span>
+              <span id="cell36P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Scroll</span></td>
+            <td><span id="cell10" class="td-balance"></span></td>
+            <td>
+              <span id="cell10P" class="td-price-1"></span>
+              <span id="cell10P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Polygon Mumbai</span></td>
+            <td><span id="cell29" class="td-balance"></span></td>
+            <td>
+              <span id="cell29P" class="td-price-1"></span>
+              <span id="cell29P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">zkSync Era</span></td>
+            <td><span id="cell18" class="td-balance"></span></td>
+            <td>
+              <span id="cell18P" class="td-price-1"></span>
+              <span id="cell18P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">zkSync Era Testnet</span></td>
+            <td><span id="cell37" class="td-balance"></span></td>
+            <td>
+              <span id="cell37P" class="td-price-1"></span>
+              <span id="cell37P2" class="td-price-2"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="td-network">Zora</span></td>
+            <td><span id="cell19" class="td-balance"></span></td>
+            <td>
+              <span id="cell19P" class="td-price-1"></span>
+              <span id="cell19P2" class="td-price-2"></span>
+            </td>
+            <td><span class="td-network">Taiko Jolnir</span></td>
+            <td><span id="cell38" class="td-balance"></span></td>
+            <td>
+              <span id="cell38P" class="td-price-1"></span>
+              <span id="cell38P2" class="td-price-2"></span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <span class="pricing-text">Pricing by CoinGecko</span>
+      <span class="coingecko-logo">
+        <a href="https://www.coingecko.com/">
+          <img src="[latest]coingecko_logo_with_dark_text.png" alt="CoinGecko Logo" class="img-fluid"
+            style="width: 200px;">
+        </a>
+      </span>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
+  <script>
+    var address = document.getElementById("address");
+
+    const rpcUrlEth = 'https://eth.llamarpc.com';
+    const rpcUrlBnb = 'https://binance.llamarpc.com';
+    const rpcUrlMatic = 'https://polygon.llamarpc.com';
+    const rpcUrlArbNova = 'https://nova.arbitrum.io/rpc';
+    const rpcUrlArbOne = 'https://arb1.arbitrum.io/rpc';
+    const rpcUrlAva = 'https://1rpc.io/avax/c';
+    const rpcUrlBase = 'https://base.llamarpc.com';
+    const rpcUrlCelo = 'https://1rpc.io/celo';
+    const rpcUrlCore = 'https://rpc.coredao.org/';
+    const rpcUrlScroll = 'https://mainnet-rpc.scroll.io';
+    const rpcUrlLinea = 'https://1rpc.io/linea';
+    const rpcUrlManta = 'https://pacific-rpc.manta.network/http';
+    const rpcUrlMantle = 'https://mantle.rpc.thirdweb.com';
+    const rpcUrlopBnb = 'https://opbnb-mainnet-rpc.bnbchain.org';
+    const rpcUrlOp = 'https://mainnet.optimism.io';
+    const rpcUrlzkEVM = 'https://zkevm-rpc.com';
+    const rpcUrlPGN = 'https://rpc.publicgoods.network';
+    const rpcUrlzkSyncEra = 'https://zksync2-mainnet.zksync.io';
+    const rpcUrlZora = 'https://rpc.zora.energy';
+    const rpcUrlGoerli = 'https://endpoints.omniatech.io/v1/eth/goerli/public';
+    const rpcUrlSepolia = 'https://endpoints.omniatech.io/v1/eth/sepolia/public';
+    const rpcUrlHolesky = 'https://ethereum-holesky.publicnode.com';
+    const rpcUrlArbG = 'https://goerli-rollup.arbitrum.io/rpc';
+    const rpcUrlScrollSep = 'https://sepolia-rpc.scroll.io/';
+    const rpcUrlFuji = 'https://endpoints.omniatech.io/v1/avax/fuji/public';
+    const rpcUrlBaseG = 'https://goerli.base.org';
+    const rpcUrlBnbT = 'https://data-seed-prebsc-2-s1.binance.org:8545/';
+    const rpcUrlCombo = 'https://test-rpc.combonetwork.io';
+    const rpcUrlMumbai = 'https://rpc.ankr.com/polygon_mumbai';
+    const rpcUrlLineaG = 'https://rpc.goerli.linea.build';
+    const rpcUrlMantaT = 'https://manta-testnet.calderachain.xyz/http';
+    const rpcUrlMantleT = 'https://rpc.testnet.mantle.xyz';
+    const rpcUrlOpBNBT = 'https://opbnb-testnet-rpc.bnbchain.org';
+    const rpcUrlOpG = 'https://goerli.optimism.io';
+    const rpcUrlzkEVMT = 'https://rpc.public.zkevm-test.net';
+    const rpcUrlJolnir = 'https://rpc.jolnir.taiko.xyz';
+    const rpcUrlzkSyncEraT = 'https://testnet.era.zksync.dev';
+    const rpcUrlPGNS = 'https://sepolia.publicgoods.network';
+
+    const rpcUrls = [rpcUrlEth, rpcUrlBnb, rpcUrlMatic, rpcUrlArbNova, rpcUrlArbOne, rpcUrlAva, rpcUrlBase, rpcUrlCelo, rpcUrlCore, rpcUrlScroll, rpcUrlLinea,
+      rpcUrlManta, rpcUrlMantle, rpcUrlopBnb, rpcUrlOp, rpcUrlzkEVM, rpcUrlPGN, rpcUrlzkSyncEra, rpcUrlZora, rpcUrlGoerli, rpcUrlSepolia, rpcUrlHolesky, rpcUrlArbG,
+      rpcUrlScrollSep, rpcUrlFuji, rpcUrlBaseG, rpcUrlBnbT, rpcUrlCombo, rpcUrlMumbai, rpcUrlLineaG, rpcUrlMantaT, rpcUrlMantleT, rpcUrlOpBNBT, rpcUrlOpG, rpcUrlzkEVMT,
+      rpcUrlPGNS, rpcUrlzkSyncEraT, rpcUrlJolnir];
+
+    async function queryBalance(submittedAddress) {
+      try {
+        let priceList = null;
+
+        const query = {
+          "url": "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2%2Cbinancecoin%2Ccelo%2Ccocos-bcx%2Ccoredaoorg%2Cethereum%2Cmantle%2Cmatic-network&vs_currencies=usd%2Cphp&precision=2",
+          "method": "GET"
+        };
+
+        $.ajax(query).done(function (response) {
+          priceList = response;
+        });
+
+
+        for (let i = 0; i < rpcUrls.length; i++) {
+          const rpcUrl = rpcUrls[i];
+
+          const web3 = new Web3(rpcUrl);
+
+          web3.utils.toChecksumAddress(submittedAddress)
+
+          try {
+            const networkId = await web3.eth.net.getId();
+
+            const queryBalance = await web3.eth.getBalance(submittedAddress);
+
+            const currentBalance = parseFloat(web3.utils.fromWei(queryBalance, 'ether')).toFixed(8);
+
+            document.getElementById(`cell${i + 1}`).innerHTML = currentBalance;
+
+            const rpcUrlMappings = {
+              [rpcUrlBnb]: ['cell2P', 'binancecoin'],
+              [rpcUrlMatic]: ['cell3P', 'matic-network'],
+              [rpcUrlAva]: ['cell6P', 'avalanche-2'],
+              [rpcUrlCelo]: ['cell8P', 'celo'],
+              [rpcUrlCore]: ['cell9P', 'coredaoorg'],
+              [rpcUrlMantle]: ['cell13P', 'mantle'],
+              [rpcUrlopBnb]: ['cell14P', 'binancecoin'],
+              [rpcUrlzkEVM]: ['cell16P', 'matic-network'],
+              [rpcUrlFuji]: ['cell25P', 'avalanche-2'],
+              [rpcUrlBnbT]: ['cell27P', 'binancecoin'],
+              [rpcUrlCombo]: ['cell28P', 'cocos-bcx'],
+              [rpcUrlMumbai]: ['cell29P', 'matic-network'],
+              [rpcUrlMantleT]: ['cell32P', 'mantle'],
+              [rpcUrlOpBNBT]: ['cell33P', 'binancecoin'],
+              [rpcUrlzkEVMT]: ['cell35P', 'matic-network']
+            };
+
+            const mapping = rpcUrlMappings[rpcUrls[i]] || [`cell${i + 1}P`, 'ethereum'];
+            const [cellId, coinName] = mapping;
+
+            document.getElementById(cellId).innerHTML = `$ ${commaSeparate((currentBalance * priceList[coinName].usd).toFixed(2))}`;
+            document.getElementById(`${cellId}2`).innerHTML = `₱ ${commaSeparate((currentBalance * priceList[coinName].php).toFixed(2))}`;
+          } catch (error) {
+            console.error(`Error querying balance: ${error}`);
+          }
+        }
+
+        alert ("Native balance query done!");
+
+      } catch (error) {
+        console.error(`Error querying balance: ${error}`);
+      }
+    }
+
+    function commaSeparate(number) {
+      const numberString = String(number);
+
+      const numberParts = numberString.split('.');
+
+      const wholeNumberPart = numberParts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+
+      const decimalPart = numberParts[1] || '';
+
+      const formattedNumber = `${wholeNumberPart}${decimalPart ? '.' + decimalPart : ''}`;
+
+      return formattedNumber;
+    }
+
+    document.getElementById('submitWallet').addEventListener('click', function () {
+      var addressValue = address.value;
+
+      queryBalance(addressValue);
+    });
+  </script>
+</body>
+
+</html>
